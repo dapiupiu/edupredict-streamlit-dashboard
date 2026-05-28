@@ -23,13 +23,13 @@ def render_explorer(df_raw):
         st.warning("⚠️ Tidak ada data yang sesuai dengan kombinasi kriteria pencarian.")
         return
 
-    # Highlight Anomali (High Risk diberi warna latar merah muda)
+    # highlight anomali (High Risk diberi warna latar merah muda)
     def highlight_high_risk(row):
         return ['background-color: #fadbd8' if row['Risk_Category'] == 'High' else '' for _ in row]
         
     st.markdown("> **Petunjuk:** Klik judul kolom untuk melakukan pengurutan data (*sorting*). Kolom `Exam_Score` diikutsertakan di sini murni untuk keperluan penelaahan riwayat historis.")
     st.dataframe(df_exp.style.apply(highlight_high_risk, axis=1), use_container_width=True, height=500)
     
-    # Download Button
+    # download button
     csv_bytes = df_exp.to_csv(index=False).encode('utf-8')
     st.download_button(label="📥 Unduh Data Hasil Filter Ini (CSV)", data=csv_bytes, file_name="EduPredict_Filtered_Explorer.csv", mime="text/csv")
