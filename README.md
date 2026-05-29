@@ -59,7 +59,7 @@ edupredict-ai/
 │   ├── edupredict_clean.ipynb
 │   └── edupredict_train.ipynb
 ├── .streamlit/              # Konfigurasi Streamlit (Tema dan Server)
-│   ├── config.toml          
+│   └── config.toml          
 ├── .gitignore               # Konfigurasi file yang diabaikan Git
 ├── README.md                # Dokumentasi proyek
 └── requirements.txt         # Daftar dependensi library
