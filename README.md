@@ -1,4 +1,4 @@
-# 🎓 EduPredict AI: Early Warning Detection System for Academic
+# 🎓 EduPredict AI: Early Warning Detection System for Student Academic Performance
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
