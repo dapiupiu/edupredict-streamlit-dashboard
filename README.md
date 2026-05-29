@@ -58,7 +58,8 @@ edupredict-ai/
 ├── notebooks/               # Dokumentasi proses DS/ML 
 │   ├── edupredict_clean.ipynb
 │   └── edupredict_train.ipynb
-├── .streamlit/              # Konfigurasi Streamlit
+├── .streamlit/              # Konfigurasi Streamlit (Tema dan Server)
+│   ├── config.toml          
 ├── .gitignore               # Konfigurasi file yang diabaikan Git
 ├── README.md                # Dokumentasi proyek
 └── requirements.txt         # Daftar dependensi library
