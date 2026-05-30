@@ -79,27 +79,6 @@ def clamp_input(input_dict):
             clamped[col] = max(lo, min(hi, clamped[col]))
     return clamped
 
-def check_ood(input_dict):
-    """Mendeteksi apakah input berada di luar distribusi data (Out-of-Distribution)"""
-    warnings = []
-    if input_dict.get('Attendance', 85) < 60:
-        warnings.append(f"Kehadiran {input_dict['Attendance']}% di bawah data training (min 60%)")
-    if input_dict.get('Hours_Studied', 15) < 4:
-        warnings.append(f"Jam belajar {input_dict['Hours_Studied']} di bawah data training (min 4)")
-    if input_dict.get('Hours_Studied', 15) > 36:
-        warnings.append(f"Jam belajar {input_dict['Hours_Studied']} di atas data training (max 36)")
-    if input_dict.get('Previous_Scores', 75) < 50:
-        warnings.append(f"Nilai sebelumnya {input_dict['Previous_Scores']} di bawah data training (min 50)")
-    if input_dict.get('Sleep_Hours', 7) < 4:
-        warnings.append(f"Jam tidur {input_dict['Sleep_Hours']} di bawah data training (min 4)")
-    if input_dict.get('Sleep_Hours', 7) > 10:
-        warnings.append(f"Jam tidur {input_dict['Sleep_Hours']} di atas data training (max 10)")
-    if input_dict.get('Tutoring_Sessions', 1) > 7:
-        warnings.append(f"Sesi bimbingan {input_dict['Tutoring_Sessions']} di atas data training (max 7)")
-    if input_dict.get('Physical_Activity', 3) > 6:
-        warnings.append(f"Aktivitas fisik {input_dict['Physical_Activity']} di atas data training (max 6)")
-    return warnings
-
 def render_predict(color_map):
     st.title("Prediksi Risiko Akademik Siswa Secara Real-Time")
     st.markdown("Masukkan indikator performa harian siswa di bawah ini untuk mengestimasikan kategori risiko akademis harian secara instan menggunakan kecerdasan buatan.")
@@ -173,13 +152,6 @@ def render_predict(color_map):
             'Physical_Activity': physical_activity,
             'Parental_Education_Level': parental_edu
         }
-        
-        # deteksi Out-of-Distribution (OOD) dan berikan peringatan kepada pengguna
-        ood_warns = check_ood(input_data)
-        if ood_warns:
-            st.warning("⚠️ **Input di luar distribusi data pelatihan:**\n" + 
-                       "\n".join([f"- {w}" for w in ood_warns]) +
-                       "\n\n*Sistem secara otomatis menyesuaikan (clamping) input ke batas distribusi data pelatihan agar prediksi tetap reliabel.*")
         
         # terapkan input clamping sebelum data diproses oleh model
         clamped_data = clamp_input(input_data)
