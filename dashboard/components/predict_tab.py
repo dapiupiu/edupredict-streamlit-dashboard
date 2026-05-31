@@ -115,22 +115,22 @@ def render_predict(color_map):
         with c1:
             st.markdown("#### Faktor Akademis & Kedisiplinan")
             hours_studied = st.slider("Jam Belajar Per Minggu (Hours Studied):", 1, 50, 15)
-            attendance = st.slider("Persentase Kehadiran Kelas (Attendance %):", 0, 100, 85)
-            previous_scores = st.slider("Nilai Ujian Sebelumnya (Previous Scores):", 0, 100, 75)
+            attendance = st.slider("Persentase Kehadiran di Kelas (Attendance %):", 0, 100, 85)
+            previous_scores = st.slider("Nilai Rapor Sebelumnya (Previous Scores):", 0, 100, 75)
             tutoring_sessions = st.number_input("Jumlah Sesi Bimbingan (Tutoring Sessions):", min_value=0, max_value=20, value=1, step=1)
             sleep_hours = st.slider("Rata-rata Jam Tidur Harian (Sleep Hours):", 3, 12, 7)
             physical_activity = st.slider("Frekuensi Olahraga Per Minggu (Physical Activity):", 0, 7, 3)
 
         with c2:
             st.markdown("#### Faktor Psikososial & Lingkungan")
-            motivation_level = st.selectbox("Tingkat Motivasi Siswa:", options=list(label_encoders['Motivation_Level'].classes_), index=1)
-            parental_involvement = st.selectbox("Keterlibatan Orang Tua:", options=list(label_encoders['Parental_Involvement'].classes_), index=1)
-            access_resources = st.selectbox("Akses Fasilitas Belajar:", options=list(label_encoders['Access_to_Resources'].classes_), index=1)
-            teacher_quality = st.selectbox("Kualitas Tenaga Pengajar:", options=list(label_encoders['Teacher_Quality'].classes_), index=1)
-            family_income = st.selectbox("Tingkat Pendapatan Keluarga:", options=list(label_encoders['Family_Income'].classes_), index=1)
-            parental_edu = st.selectbox("Tingkat Pendidikan Orang Tua:", options=list(label_encoders['Parental_Education_Level'].classes_), index=1)
+            motivation_level = st.selectbox("Tingkat Motivasi Siswa (Motivation Level):", options=list(label_encoders['Motivation_Level'].classes_), index=1)
+            parental_involvement = st.selectbox("Keterlibatan Orang Tua (Parental Involvement):", options=list(label_encoders['Parental_Involvement'].classes_), index=1)
+            access_resources = st.selectbox("Akses Fasilitas Belajar (Access to Resources):", options=list(label_encoders['Access_to_Resources'].classes_), index=1)
+            teacher_quality = st.selectbox("Kualitas Tenaga Pengajar (Teacher Quality):", options=list(label_encoders['Teacher_Quality'].classes_), index=1)
+            family_income = st.selectbox("Tingkat Pendapatan Keluarga (Family Income):", options=list(label_encoders['Family_Income'].classes_), index=1)
+            parental_edu = st.selectbox("Tingkat Pendidikan Orang Tua (Parental Education Level):", options=list(label_encoders['Parental_Education_Level'].classes_), index=1)
             peer_influence = st.selectbox("Pengaruh Teman Sebaya (Peer Influence):", options=list(label_encoders['Peer_Influence'].classes_), index=1)
-            internet_access = st.radio("Akses Jaringan Internet di Rumah:", options=list(label_encoders['Internet_Access'].classes_), index=1, horizontal=True)
+            internet_access = st.radio("Akses Jaringan Internet di Rumah (Internet Access):", options=list(label_encoders['Internet_Access'].classes_), index=1, horizontal=True)
 
         submit_btn = st.form_submit_button("🚀 Hitung Estimasi Risiko Akademik")
 
@@ -205,7 +205,7 @@ def render_predict(color_map):
         
         st.markdown(
             f"""
-            <div style="background-color:{chosen_color}; padding:20px; border-radius:10px; text-align:center;">
+            <div style="background-color:{chosen_color}; padding:20px; border-radius:15px; text-align:center;">
                 <h2 style="color:white; margin:0;">KATEGORI RISIKO: {final_risk_label.upper()} RISK</h2>
                 <p style="color:white; margin:5px 0 0 0; font-size:16px;">Sistem mendeteksi tingkat kerentanan akademik siswa berada di kelas risiko {final_risk_label}.</p>
             </div>
