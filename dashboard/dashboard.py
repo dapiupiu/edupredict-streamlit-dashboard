@@ -13,10 +13,13 @@ from components.explorer_tab import render_explorer
 from components.predict_tab import render_predict
 
 # Konfigurasi Halaman Utama
+current_dir = os.path.dirname(os.path.abspath(__file__))
+logo_path = os.path.join(current_dir, "assets", "logo.png")
+
 st.set_page_config(
     layout="wide", 
     page_title="EduPredict AI", 
-    page_icon="🎓"
+    page_icon=logo_path
 )
 
 # Palet warna resmi sesuai spesifikasi
@@ -65,7 +68,10 @@ def load_historical_data():
 df_raw = load_historical_data()
 
 # sidebar navigasi utama
-st.sidebar.title("🎓 EduPredict AI")
+col1, col2, col3 = st.sidebar.columns([1, 2, 1])
+with col2:
+    st.image(logo_path, use_container_width=True)
+st.sidebar.markdown("<h2 style='text-align: center; margin-top: -15px;'>EduPredict AI</h2>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 page = st.sidebar.radio(
     "Pilih Halaman Navigasi:",
