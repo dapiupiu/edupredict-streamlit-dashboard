@@ -22,13 +22,6 @@ data/**/*.csv
 data/**/*.xlsx
 data/**/*.parquet
 
-# Models
-*.pkl
-*.h5
-*.keras
-*.joblib
-*.onnx
-
 # OS files
 .DS_Store
 Thumbs.db
