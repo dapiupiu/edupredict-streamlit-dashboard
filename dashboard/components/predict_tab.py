@@ -21,13 +21,19 @@ def get_genai_insight(input_data, risk_category, confidence, predicted_score=0.0
     }
 
     try:
-        #kirim data input ke API Railway
+        # kirim data input ke API Railway
         response = requests.post(RAILWAY_URL, json=payload, timeout=15)
         if response.status_code == 200:
             result = response.json()
             recs = result.get('recommendations', [])
             if recs:
-                return "\n".join([f"- {r.get('text', '')}" for r in recs])
+                formatted_recs = []
+                for r in recs:
+                    title = r.get('title', 'Rekomendasi')
+                    desc = r.get('description', '')
+                    action = r.get('action', '')
+                    formatted_recs.append(f"### {title}\n{desc}\n\n**Aksi:** {action}")
+                return "\n\n---\n\n".join(formatted_recs)
             return "Tidak ada rekomendasi yang diberikan oleh AI."
         else:
             return f"Error API: {response.status_code} - {response.text}"
@@ -156,7 +162,7 @@ def render_predict(color_map):
         # terapkan input clamping sebelum data diproses oleh model
         clamped_data = clamp_input(input_data)
         
-        # simpan input yang telah di-clamp ke dalam DataFrame
+        # simpan input yang telah di-clamp ke dalam DataFrame (UNTUK MODEL ML)
         input_df = pd.DataFrame([clamped_data])
         
         # pastikan urutan kolom input_df sesuai dengan feature_cols.pkl
@@ -191,7 +197,7 @@ def render_predict(color_map):
 
         with st.spinner("Sedang memproses prediksi..."):
             ai_insight = get_genai_insight(
-                clamped_data,  # Gunakan data yang sudah di-clamp untuk konsistensi insight
+                input_data,  # <-- SUDAH DIPERBAIKI: Menggunakan data asli/raw untuk GenAI
                 risk_category=final_risk_label,
                 confidence=probabilities[pred_idx]
             )
@@ -224,14 +230,3 @@ def render_predict(color_map):
         # tampilkan insight tambahan dari GenAI untuk rekomendasi intervensi berbasis AI
         st.markdown("#### 💡Rekomendasi Intervensi AI:")
         st.info(ai_insight) # rekomendasi intervensi berbasis AI dari API Railway GenAI
-
-        """
-        # tampilkan rekomendasi intervensi berdasarkan risiko yang terdeteksi
-        st.markdown("#### 💡 Rekomendasi Strategi Intervensi Pendidik:")
-        if final_risk_label == 'High':
-            st.error("🚨 **Intervensi Prioritas Utama:** Siswa memerlukan pendampingan belajar intensif empat mata harian. Segera adakan pertemuan segitiga bersama wali murid, optimalkan sesi bimbingan konseling akademik khusus, serta lakukan penyesuaian target capaian nilai harian.")
-        elif final_risk_label == 'Medium':
-            st.warning("⚠️ **Intervensi Preventif:** Tingkatkan frekuensi keterlibatan siswa dalam forum kelompok belajar, dorong siswa untuk menambah 2-3 jam sesi belajar mandiri terstruktur per minggu, serta lakukan pemantauan grafik absensi kehadiran di kelas secara berkala.")
-        else:
-            st.success("🌟 **Strategi Preservasi Performa:** Siswa berada di jalur akademis yang aman dan stabil. Berikan apresiasi motivasi berkala agar siswa konsisten mempertahankan ritme kedisiplinan belajar dan tingkat kehadiran saat ini.")
-        """
