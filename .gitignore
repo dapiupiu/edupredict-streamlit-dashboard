@@ -18,9 +18,9 @@ env/
 .streamlit/secrets.toml
 
 # Data (Excluding datasets to keep repo lean)
-data/**/*.csv
-data/**/*.xlsx
-data/**/*.parquet
+# data/**/*.csv
+# data/**/*.xlsx
+# data/**/*.parquet
 
 # OS files
 .DS_Store
