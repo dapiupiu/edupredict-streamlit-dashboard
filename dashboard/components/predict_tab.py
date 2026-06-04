@@ -8,7 +8,7 @@ import requests
 
 def get_genai_insight(input_data, risk_category, confidence, predicted_score=0.0):
     """Fungsi untuk mengambil insight dari API Railway GenAI berdasarkan input data siswa"""
-    RAILWAY_URL = "https://edupredictaimlproduction.up.railway.app/api/v1/analyze/recommendations"
+    RAILWAY_URL = "https://edupredictaiprod.up.railway.app/api/v1/analyze/recommendations"
 
     payload = {
         "student_id": "STU-Realtime",
