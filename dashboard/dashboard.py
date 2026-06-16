@@ -22,8 +22,91 @@ st.set_page_config(
     page_icon=logo_path
 )
 
-# Palet warna resmi sesuai spesifikasi
-COLOR_MAP = {'High': '#e74c3c', 'Medium': '#f39c12', 'Low': '#2ecc71'}
+st.markdown("""
+<style>
+    /* Impor Font Modern */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Styling Container Utama */
+    .main {
+        background-color: #FFFFFF;
+    }
+
+    /* Styling Card dan Kontainer */
+    div[data-testid="stMetric"] {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        padding: 15px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease;
+    }
+    div[data-testid="stMetric"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #F0F4F8;
+        border-right: 1px solid #E2E8F0;
+    }
+    section[data-testid="stSidebar"] .st-emotion-cache-6qob1r {
+        background-color: transparent;
+    }
+
+    /* Tombol Radio Sidebar */
+    div[data-testid="stSidebarNav"] {
+        padding-top: 20px;
+    }
+
+    /* Heading Sidebar */
+    .sidebar-title {
+        color: #1E40AF;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Custom Card Style for general containers */
+    .custom-card {
+        background-color: white;
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        margin-bottom: 20px;
+    }
+
+    /* Styling Divider */
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid #E2E8F0;
+    }
+
+    /* Style for Buttons */
+    .stButton>button {
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    /* Plotly Chart Container */
+    .js-plotly-plot {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+COLOR_MAP = {'High': '#EF4444', 'Medium': '#F59E0B', 'Low': '#10B981'}
 
 @st.cache_data
 def load_historical_data():
@@ -68,40 +151,45 @@ def load_historical_data():
 df_raw = load_historical_data()
 
 # sidebar navigasi utama
-col1, col2, col3 = st.sidebar.columns([1, 2, 1])
-with col2:
-    st.image(logo_path, use_container_width=True)
-st.sidebar.markdown("<h2 style='text-align: center; margin-top: -15px;'>EduPredict AI</h2>", unsafe_allow_html=True)
-st.sidebar.markdown("---")
-page = st.sidebar.radio(
-    "Pilih Halaman Navigasi:",
-    [
-        "Overview", 
-        "Exploratory Data Analysis", 
-        "Business Questions", 
-        "Profil High Risk", 
-        "Uji Komparatif (Attendance)", 
-        "Data Explorer",
-        "Prediksi Risiko Real-Time"
-    ]
-)
-st.sidebar.markdown("---")
-
-# filter global untuk halaman Overview, EDA, dan Business Questions agar tetap konsisten dalam analisis
-if page in ["Overview", "Exploratory Data Analysis", "Business Questions"]:
-    st.sidebar.header("Filter Global")
-    global_risk = st.sidebar.multiselect(
-        "Kategori Risiko:", options=['High', 'Medium', 'Low'], default=['High', 'Medium', 'Low']
-    )
-    global_school = st.sidebar.selectbox(
-        "Tipe Sekolah:", options=["All"] + list(df_raw['School_Type'].unique()), index=0
-    )
+with st.sidebar:
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(logo_path, use_container_width=True)
     
-    df_filtered = df_raw[df_raw['Risk_Category'].isin(global_risk)]
-    if global_school != "All":
-        df_filtered = df_filtered[df_filtered['School_Type'] == global_school]
+    st.markdown("<div class='sidebar-title'>EduPredict AI</div>", unsafe_allow_html=True)
+    st.divider()
+    
+    page = st.radio(
+        "Pilih Halaman Navigasi:",
+        [
+            "Overview", 
+            "Exploratory Data Analysis", 
+            "Business Questions", 
+            "Profil High Risk", 
+            "Uji Komparatif (Attendance)", 
+            "Data Explorer",
+            "Prediksi Risiko Real-Time"
+        ]
+    )
+    st.divider()
+
+# filter global untuk halaman Overview, EDA, dan Business Questions
+if page in ["Overview", "Exploratory Data Analysis", "Business Questions"]:
+    with st.sidebar:
+        st.markdown("### Filter Global")
+        global_risk = st.multiselect(
+            "Kategori Risiko:", options=['High', 'Medium', 'Low'], default=['High', 'Medium', 'Low']
+        )
+        global_school = st.selectbox(
+            "Tipe Sekolah:", options=["All"] + list(df_raw['School_Type'].unique()), index=0
+        )
         
-    st.sidebar.metric("Data Aktif:", f"{len(df_filtered)} / {len(df_raw)} siswa")
+        df_filtered = df_raw[df_raw['Risk_Category'].isin(global_risk)]
+        if global_school != "All":
+            df_filtered = df_filtered[df_filtered['School_Type'] == global_school]
+        
+        # Metric di sidebar dipercantik dengan container kustom
+        st.info(f"**Data Aktif:** {len(df_filtered)} / {len(df_raw)} siswa")
     
     if len(df_filtered) == 0:
         st.title(page)
