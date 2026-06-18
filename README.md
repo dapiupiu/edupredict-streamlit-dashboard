@@ -10,7 +10,7 @@
 
 ---
 
-## 📌 Deskripsi Proyek
+## Deskripsi Proyek
 
 Proyek ini berfokus pada analisis faktor-faktor yang mempengaruhi keberhasilan akademik siswa, mulai dari aspek internal (seperti motivasi dan jam belajar) hingga aspek eksternal (seperti keterlibatan orang tua dan latar belakang ekonomi). Sistem ini mengkategorikan siswa ke dalam tiga tingkat risiko: **Low**, **Medium**, dan **High Risk**.
 
@@ -22,7 +22,7 @@ Tujuan utama dari proyek ini adalah:
 
 ---
 
-## 🚀 Fitur Utama
+## Fitur Utama
 
 Dashboard EduPredict AI terbagi menjadi beberapa modul fungsional:
 
@@ -36,7 +36,7 @@ Dashboard EduPredict AI terbagi menjadi beberapa modul fungsional:
 
 ---
 
-## 📂 Struktur Proyek
+## Struktur Proyek
 
 ```text
 edupredict-ai/
@@ -67,7 +67,7 @@ edupredict-ai/
 
 ---
 
-## 🛠️ Panduan Menjalankan Program
+## Panduan Menjalankan Program
 
 Ikuti langkah-langkah berikut untuk menjalankan dashboard di lingkungan lokal Anda:
 
@@ -104,7 +104,7 @@ Aplikasi akan terbuka secara otomatis di browser Anda di alamat `http://localhos
 
 ---
 
-## 📈 Saran Pengembangan Kedepan
+## Saran Pengembangan Kedepan
 
 Untuk meningkatkan akurasi dan kegunaan sistem, beberapa aspek berikut dapat dikembangkan lebih lanjut:
 
@@ -116,7 +116,7 @@ Untuk meningkatkan akurasi dan kegunaan sistem, beberapa aspek berikut dapat dik
 
 ---
 
-## 📝 Catatan Tambahan
+## Catatan Tambahan
 *Dataset yang digunakan dalam demo ini telah dienkripsi atau menggunakan dummy data jika file `.csv` asli tidak ditemukan di folder `data/processed/`, untuk menjaga privasi informasi siswa.*
 
 ---
